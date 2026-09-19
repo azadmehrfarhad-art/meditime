@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مدیتایم | ثبت حضور بالینی</title>
+<style>
+body{font-family:Tahoma,Arial,sans-serif;background:#f5f7fb;margin:0;color:#18202a}
+.card{max-width:520px;margin:28px auto;background:white;border-radius:20px;padding:22px;box-shadow:0 8px 30px #0001}
+h1{margin:0 0 6px;font-size:24px}p{color:#667085}
+label{display:block;margin:14px 0 6px;font-weight:bold}
+input,button{width:100%;box-sizing:border-box;padding:13px;border-radius:12px;border:1px solid #d0d5dd;font-size:16px}
+button{margin-top:18px;border:0;background:#111827;color:white;cursor:pointer}
+button:disabled{opacity:.5}
+video{width:100%;border-radius:16px;background:#111;margin-top:8px}
+.status{margin-top:14px;padding:12px;border-radius:12px;background:#f2f4f7;display:none}
+small{color:#667085}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>مدیتایم</h1>
+<p>سامانه ثبت حضور و غیاب بالینی دانشجویان</p>
+
+<form id="attendanceForm" target="uploadFrame" method="POST">
+  <label>نام و نام خانوادگی</label>
+  <input id="name" name="name" required>
+
+  <label>شماره دانشجویی</label>
+  <input id="studentId" name="studentId" required inputmode="numeric">
+
+  <label>سلفی زنده</label>
+  <video id="video" autoplay playsinline></video>
+  <small>برای ثبت ورود، اجازه دوربین و موقعیت مکانی را بدهید.</small>
+
+  <input type="hidden" id="latitude" name="latitude">
+  <input type="hidden" id="longitude" name="longitude">
+  <input type="hidden" id="accuracy" name="accuracy">
+  <input type="hidden" id="selfie" name="selfie">
+
+  <button id="submitBtn" type="submit">ثبت ورود</button>
+</form>
+<iframe name="uploadFrame" id="uploadFrame" style="display:none"></iframe>
+<div class="status" id="status"></div>
+</div>
+
+<script>
+/* آدرس Web App گوگل را اینجا قرار دهید */
+window.API_URL = "https://script.google.com/macros/s/AKfycbxLsoRMrYf4PFqk0N-7DwCuRVhBjr4L-WrAMiuVou-IjYANaOciV7LY4ThGhcghDq7ZJw/exec";
+
+const video = document.getElementById('video');
+const form = document.getElementById('attendanceForm');
+const statusBox = document.getElementById('status');
+const btn = document.getElementById('submitBtn');
+
+function status(msg, show=true){
+  statusBox.textContent=msg;
+  statusBox.style.display=show?'block':'none';
+}
+
+async function startCamera(){
+  if(!navigator.mediaDevices?.getUserMedia){
+    throw new Error('مرورگر یا اتصال امن برای دوربین در دسترس نیست.');
+  }
+  const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
+  video.srcObject=stream;
+}
+
+function getLocation(){
+  return new Promise((resolve,reject)=>{
+    if(!navigator.geolocation) return reject(new Error('GPS در دسترس نیست.'));
+    navigator.geolocation.getCurrentPosition(resolve,reject,{
+      enableHighAccuracy:true,timeout:15000,maximumAge:0
+    });
+  });
+}
+
+function captureSelfie(){
+  const canvas=document.createElement('canvas');
+  canvas.width=video.videoWidth || 720;
+  canvas.height=video.videoHeight || 960;
+  canvas.getContext('2d').drawImage(video,0,0,canvas.width,canvas.height);
+  return canvas.toDataURL('image/jpeg',0.82);
+}
+
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  try{
+    if(window.API_URL.includes('PASTE_YOUR')) throw new Error('ابتدا API_URL را تنظیم کنید.');
+    if(!video.videoWidth) throw new Error('دوربین هنوز آماده نیست.');
+    status('در حال دریافت موقعیت مکانی...');
+    const pos=await getLocation();
+    document.getElementById('latitude').value=pos.coords.latitude;
+    document.getElementById('longitude').value=pos.coords.longitude;
+    document.getElementById('accuracy').value=pos.coords.accuracy;
+    document.getElementById('selfie').value=captureSelfie();
+
+    form.action=window.API_URL;
+    btn.disabled=true;
+    status('در حال ثبت ورود...');
+    form.submit();
+
+    setTimeout(()=>{
+      status('اطلاعات ارسال شد. اگر خطایی نمایش داده نشد، ثبت ورود انجام شده است.');
+      btn.disabled=false;
+    },1800);
+  }catch(err){
+    status(err.message || 'خطایی رخ داد.');
+    btn.disabled=false;
+  }
+});
+
+startCamera().catch(err=>status(err.message || 'دسترسی دوربین برقرار نشد.'));
+</script>
+</body>
+</html>
