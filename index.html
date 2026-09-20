@@ -50,7 +50,7 @@ style="width:100%;box-sizing:border-box;padding:13px;border-radius:12px;border:1
 <option value="">ابتدا بیمارستان را انتخاب کنید</option>
 
 </select>
-<label>سلفی زنده</label><label>سلفی زنده</label>
+<label>سلفی زنده</label>
 
 <div style="position:relative;width:100%;max-width:420px;margin:0 auto;">
 
@@ -200,6 +200,61 @@ function updateDateTime() {
 
 updateDateTime();
 setInterval(updateDateTime, 1000);
+const hospitalSelect = document.getElementById('hospital');
+const departmentSelect = document.getElementById('clinicalDepartment');
+
+const departments = {
+  شفا: [
+    'اورژانس کودکان',
+    'ICU',
+    'پست پارتوم',
+    'اتاق عمل',
+    'بلوک زایمان',
+    'جراحی مردان',
+    'جراحی زنان',
+    'NICU'
+  ],
+
+  امام: [
+    'CCU',
+    'انکولوژی',
+    'اتاق عمل',
+    'ICU',
+    'داخلی مردان',
+    'داخلی زنان',
+    'جراحی زنان',
+    'دیالیز',
+    'اورژانس',
+    'روانپزشکی'
+  ]
+};
+
+hospitalSelect.addEventListener('change', function() {
+
+  const hospital = this.value;
+
+  departmentSelect.innerHTML =
+    '<option value="">انتخاب بخش بالینی</option>';
+
+  if (!hospital) {
+    departmentSelect.disabled = true;
+    return;
+  }
+
+  departments[hospital].forEach(function(department) {
+
+    const option = document.createElement('option');
+
+    option.value = department;
+    option.textContent = department;
+
+    departmentSelect.appendChild(option);
+
+  });
+
+  departmentSelect.disabled = false;
+
+});
 </script>
 </body>
 </html>
