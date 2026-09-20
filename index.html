@@ -37,7 +37,9 @@ small{color:#667085}
 ">
   ✓ ثبت با موفقیت انجام شد
 </div> 
-<form id="attendanceForm" target="uploadFrame" method="POST">
+<form id="attendanceForm" target="submitFrame"> target="uploadFrame" method="POST">
+  <iframe name="submitFrame" id="submitFrame"
+  style="display:none;"></iframe> 
 <input type="hidden" id="eventType" name="eventType" value="entry">
   <label>نام و نام خانوادگی</label>
   <input id="name" name="name" required>
