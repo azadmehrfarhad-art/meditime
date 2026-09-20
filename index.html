@@ -56,7 +56,14 @@ const form = document.getElementById('attendanceForm');
 const statusBox = document.getElementById('status');
 const btn = document.getElementById('submitBtn');
 const exitBtn = document.getElementById('exitBtn');
+exitBtn.addEventListener('click',()=>{
+  document.getElementById('eventType').value='exit';
+  form.requestSubmit();
+});
 
+btn.addEventListener('click',()=>{
+  document.getElementById('eventType').value='entry';
+});
 function status(msg, show=true){
   statusBox.textContent=msg;
   statusBox.style.display=show?'block':'none';
