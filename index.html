@@ -31,27 +31,33 @@ small{color:#667085}
   <label>شماره دانشجویی</label>
   <input id="studentId" name="studentId" required inputmode="numeric">
 
-  <label>سلفی زنده</label>
-  
+<label>سلفی زنده</label>
+
+<div style="position:relative;width:100%;max-width:420px;margin:0 auto;">
+
   <video id="video" autoplay playsinline
-    style="width:100%;display:block;border-radius:16px;"></video>
-  <div style="
-  <small>برای ثبت ورود، اجازه دوربین و موقعیت مکانی را بدهید.</small>
-div style="position:relative;width:100%;max-width:420px;margin:auto;">
-  <video id="video" autoplay playsinline
-    style="width:100%;display:block;border-radius:16px;"></video>
+    style="width:100%;display:block;border-radius:16px;background:#111;">
+  </video>
+
+  <!-- کادر سبز راهنمای سر و صورت -->
   <div style="
     position:absolute;
-    top:12%;
+    top:10%;
     left:22%;
     width:56%;
-    height:58%;
+    height:65%;
     border:3px solid #00c853;
     border-radius:50%;
     box-sizing:border-box;
     pointer-events:none;
+    z-index:10;
   "></div>
+
 </div>
+
+<small>
+  سر و صورت خود را داخل کادر سبز قرار دهید.
+</small>
   <input type="hidden" id="latitude" name="latitude">
   <input type="hidden" id="longitude" name="longitude">
   <input type="hidden" id="accuracy" name="accuracy">
