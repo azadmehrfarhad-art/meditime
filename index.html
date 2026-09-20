@@ -202,7 +202,6 @@ updateDateTime();
 setInterval(updateDateTime, 1000);
 const hospitalSelect = document.getElementById('hospital');
 const departmentSelect = document.getElementById('clinicalDepartment');
-
 const departments = {
   شفا: [
     'اورژانس کودکان',
@@ -230,30 +229,20 @@ const departments = {
 };
 
 hospitalSelect.addEventListener('change', function() {
-
   const hospital = this.value;
-
   departmentSelect.innerHTML =
     '<option value="">انتخاب بخش بالینی</option>';
-
   if (!hospital) {
     departmentSelect.disabled = true;
     return;
   }
-
   departments[hospital].forEach(function(department) {
-
     const option = document.createElement('option');
-
     option.value = department;
     option.textContent = department;
-
     departmentSelect.appendChild(option);
-
   });
-
   departmentSelect.disabled = false;
-
 });
 </script>
 </body>
