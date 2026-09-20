@@ -107,12 +107,13 @@ form.addEventListener('submit',async e=>{
     document.getElementById('selfie').value=captureSelfie();
 
     form.action=window.API_URL;
-    btn.disabled=true;
-   status(eventType === 'exit' ? 'در حال ثبت خروج...' : 'در حال ثبت ورود...');
+   const currentEventType = document.getElementById('eventType').value;
+btn.disabled=true;
+status(currentEventType === 'exit' ? 'در حال ثبت خروج...' : 'در حال ثبت ورود...');
     form.submit();
 
     setTimeout(()=>{
-     status(eventType === 'exit'
+    status(currentEventType === 'exit'
   ? 'ثبت خروج با موفقیت انجام شد.'
   : 'ثبت ورود با موفقیت انجام شد.');
       btn.disabled=false;
