@@ -112,7 +112,9 @@ form.addEventListener('submit',async e=>{
     form.submit();
 
     setTimeout(()=>{
-      status('اطلاعات ارسال شد. اگر خطایی نمایش داده نشد، ثبت ورود انجام شده است.');
+     status(eventType === 'exit'
+  ? 'ثبت خروج با موفقیت انجام شد.'
+  : 'ثبت ورود با موفقیت انجام شد.');
       btn.disabled=false;
     },1800);
   }catch(err){
