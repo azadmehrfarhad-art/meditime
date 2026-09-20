@@ -110,7 +110,11 @@ status(currentEventType === 'exit' ? 'در حال ثبت خروج...' : 'در ح
     form.submit();
 
    setTimeout(()=>{
-  status('ثبت با موفقیت انجام شد.');
+  status(
+    currentEventType === 'exit'
+      ? 'ثبت خروج با موفقیت انجام شد.'
+      : 'ثبت ورود با موفقیت انجام شد.'
+  );
   btn.disabled=false;
 },1800);
   }catch(err){
