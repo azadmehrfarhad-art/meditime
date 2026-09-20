@@ -30,7 +30,26 @@ small{color:#667085}
 
   <label>شماره دانشجویی</label>
   <input id="studentId" name="studentId" required inputmode="numeric">
+<label>بیمارستان</label>
 
+<select id="hospital" name="hospital" required
+style="width:100%;box-sizing:border-box;padding:13px;border-radius:12px;border:1px solid #d0d5dd;font-size:16px;background:white;">
+
+<option value="">انتخاب بیمارستان</option>
+<option value="شفا">بیمارستان شفا</option>
+<option value="امام">بیمارستان امام</option>
+
+</select>
+
+<label>بخش بالینی</label>
+
+<select id="clinicalDepartment" name="clinicalDepartment" required
+disabled
+style="width:100%;box-sizing:border-box;padding:13px;border-radius:12px;border:1px solid #d0d5dd;font-size:16px;background:white;">
+
+<option value="">ابتدا بیمارستان را انتخاب کنید</option>
+
+</select>
 <label>سلفی زنده</label><label>سلفی زنده</label>
 
 <div style="position:relative;width:100%;max-width:420px;margin:0 auto;">
