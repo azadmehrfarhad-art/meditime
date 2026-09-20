@@ -24,6 +24,7 @@ small{color:#667085}
 <p>سامانه ثبت حضور و غیاب بالینی دانشجویان</p>
 <div id="dateTime" style="text-align:center;margin:14px 0;font-size:18px;font-weight:600;color:#344054;"></div>
 <form id="attendanceForm" target="uploadFrame" method="POST">
+<input type="hidden" id="eventType" name="eventType" value="entry">
   <label>نام و نام خانوادگی</label>
   <input id="name" name="name" required>
 
@@ -54,6 +55,7 @@ const video = document.getElementById('video');
 const form = document.getElementById('attendanceForm');
 const statusBox = document.getElementById('status');
 const btn = document.getElementById('submitBtn');
+const exitBtn = document.getElementById('exitBtn');
 
 function status(msg, show=true){
   statusBox.textContent=msg;
