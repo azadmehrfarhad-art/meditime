@@ -186,20 +186,18 @@ form.addEventListener('submit',async e=>{
    const currentEventType = document.getElementById('eventType').value;
 btn.disabled=true;
 status(currentEventType === 'exit' ? 'در حال ثبت خروج...' : 'در حال ثبت ورود...');
-    form.submit();
+    const response = await fetch(window.API_URL, {
+  method: 'POST',
+  body: new FormData(form)
+});
 
-   setTimeout(()=>{
-  document.getElementById('successMessage').style.display = 'block';
+const result = await response.json();
 
-  document.getElementById('successMessage').textContent =
-    currentEventType === 'exit'
-      ? '✓ خروج با موفقیت ثبت شد'
-      : '✓ ورود با موفقیت ثبت شد';
+if (!result.ok) {
+  throw new Error(result.message || 'ثبت در سرور انجام نشد.');
+}
 
-  status('');
-  btn.disabled=false;
-
-},1800);
+   
   }catch(err){
     status(err.message || 'خطایی رخ داد.');
     btn.disabled=false;
