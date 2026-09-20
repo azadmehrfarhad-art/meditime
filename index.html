@@ -108,7 +108,7 @@ form.addEventListener('submit',async e=>{
 
     form.action=window.API_URL;
     btn.disabled=true;
-    status('در حال ثبت ورود...');
+   status(eventType === 'exit' ? 'در حال ثبت خروج...' : 'در حال ثبت ورود...');
     form.submit();
 
     setTimeout(()=>{
