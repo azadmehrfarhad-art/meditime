@@ -84,11 +84,27 @@ function getLocation(){
 }
 
 function captureSelfie(){
-  const canvas=document.createElement('canvas');
-  canvas.width=video.videoWidth || 720;
-  canvas.height=video.videoHeight || 960;
-  canvas.getContext('2d').drawImage(video,0,0,canvas.width,canvas.height);
-  return canvas.toDataURL('image/jpeg',0.82);
+  const canvas = document.createElement('canvas');
+
+  const width = video.videoWidth || 720;
+  const height = video.videoHeight || 1280;
+
+  const cropHeight = Math.min(height, width * 1.25);
+  const cropWidth = Math.min(width, cropHeight / 1.25);
+
+  const sx = (width - cropWidth) / 2;
+  const sy = (height - cropHeight) / 2;
+
+  canvas.width = 720;
+  canvas.height = 900;
+
+  canvas.getContext('2d').drawImage(
+    video,
+    sx, sy, cropWidth, cropHeight,
+    0, 0, canvas.width, canvas.height
+  );
+
+  return canvas.toDataURL('image/jpeg', 0.82);
 }
 
 form.addEventListener('submit',async e=>{
