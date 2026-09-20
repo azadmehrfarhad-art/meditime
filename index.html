@@ -109,12 +109,10 @@ btn.disabled=true;
 status(currentEventType === 'exit' ? 'در حال ثبت خروج...' : 'در حال ثبت ورود...');
     form.submit();
 
-    setTimeout(()=>{
-    status(currentEventType === 'exit'
-  ? 'ثبت خروج با موفقیت انجام شد.'
-  : 'ثبت ورود با موفقیت انجام شد.');
-      btn.disabled=false;
-    },1800);
+   setTimeout(()=>{
+  status('ثبت با موفقیت انجام شد.');
+  btn.disabled=false;
+},1800);
   }catch(err){
     status(err.message || 'خطایی رخ داد.');
     btn.disabled=false;
