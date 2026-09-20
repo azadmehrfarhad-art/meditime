@@ -172,31 +172,51 @@ function captureSelfie(){
 
 form.addEventListener('submit',async e=>{
   e.preventDefault();
+
   try{
-    if(window.API_URL.includes('PASTE_YOUR')) throw new Error('ابتدا API_URL را تنظیم کنید.');
-    if(!video.videoWidth) throw new Error('دوربین هنوز آماده نیست.');
+
+    if(window.API_URL.includes('PASTE_YOUR'))
+      throw new Error('ابتدا API_URL را تنظیم کنید.');
+
+    if(!video.videoWidth)
+      throw new Error('دوربین هنوز آماده نیست.');
+
     status('در حال دریافت موقعیت مکانی...');
+
     const pos=await getLocation();
-    document.getElementById('latitude').value=pos.coords.latitude;
-    document.getElementById('longitude').value=pos.coords.longitude;
-    document.getElementById('accuracy').value=pos.coords.accuracy;
-    document.getElementById('selfie').value=captureSelfie();
+
+    document.getElementById('latitude').value =
+      pos.coords.latitude;
+
+    document.getElementById('longitude').value =
+      pos.coords.longitude;
+
+    document.getElementById('accuracy').value =
+      pos.coords.accuracy;
+
+    document.getElementById('selfie').value =
+      captureSelfie();
 
     form.action = window.API_URL;
-form.target = 'submitFrame';
-form.submit();
+    form.target = 'submitFrame';
 
-const result = await response.json();
+    btn.disabled=true;
 
-if (!result.ok) {
-  throw new Error(result.message || 'ثبت در سرور انجام نشد.');
-}
+    status(
+      document.getElementById('eventType').value === 'exit'
+        ? 'در حال ثبت خروج...'
+        : 'در حال ثبت ورود...'
+    );
 
-   
+    form.submit();
+
   }catch(err){
+
     status(err.message || 'خطایی رخ داد.');
     btn.disabled=false;
+
   }
+
 });
 
 startCamera().catch(err=>status(err.message || 'دسترسی دوربین برقرار نشد.'));
