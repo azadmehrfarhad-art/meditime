@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-<link rel="manifest" href="./manifest.json">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>مدیتایم | ثبت حضور بالینی</title>
 <style>
-body{font-family:Tahoma,Arial,sans-serif;background:#f5f7fb;margin:0;color:#18202a}
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+body{fbody{font-family:'Vazirmatn',Tahoma,Arial,sans-serif;background:#f5f7fb;margin:0;color:#18202a}
 .card{max-width:520px;margin:28px auto;background:white;border-radius:20px;padding:22px;box-shadow:0 8px 30px #0001}
 h1{margin:0 0 6px;font-size:24px}p{color:#667085}
 label{display:block;margin:14px 0 6px;font-weight:bold}
@@ -22,7 +22,7 @@ small{color:#667085}
 <div class="card">
 <h1>مدیتایم</h1>
 <p>سامانه ثبت حضور و غیاب بالینی دانشجویان</p>
-
+<div id="dateTime" style="text-align:center;margin:14px 0;font-size:18px;font-weight:600;color:#344054;"></div
 <form id="attendanceForm" target="uploadFrame" method="POST">
   <label>نام و نام خانوادگی</label>
   <input id="name" name="name" required>
@@ -112,6 +112,30 @@ form.addEventListener('submit',async e=>{
 });
 
 startCamera().catch(err=>status(err.message || 'دسترسی دوربین برقرار نشد.'));
+</script>
+<script>
+function updateDateTime() {
+  const now = new Date();
+
+  const date = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }).format(now);
+
+  const time = now.toLocaleTimeString('fa-IR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
+
+  document.getElementById('dateTime').textContent =
+    date + ' | ' + time;
+}
+
+updateDateTime();
+setInterval(updateDateTime, 1000);
 </script>
 </body>
 </html>
